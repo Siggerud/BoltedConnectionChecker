@@ -1,8 +1,8 @@
-from boltLoadCalc import BoltCalc
+from boltLoadCalc import BoltLoadCalc
 from math import atan
 
 class Bolt:
-    def __init__(self, size, grade, x, y, load):
+    def __init__(self, size, grade, x, y, load, countersunk=False):
         self._size = size
         self._grade = grade
         self._x = x
@@ -10,12 +10,21 @@ class Bolt:
         self._load = load
         self._plate = None
         self._bolts = None
+        self._countersunk = countersunk
+
+    @property
+    def countersunk(self):
+        return self._countersunk
 
     def add_plate(self, plate):
         self._plate = plate
 
     def add_bolts(self, bolts):
         self._bolts = bolts
+
+    @property
+    def fub(self):
+        return int(self.grade[0]) * 100
 
     @property
     def areaForAllBolts(self):
@@ -95,12 +104,16 @@ class Bolt:
 
     @property
     def Pz(self):
-        calc = BoltCalc(self, self._load)
+        calc = BoltLoadCalc(self, self._load)
 
         return calc.getPz()
 
     @property
     def Pr(self):
-        calc = BoltCalc(self, self._load)
+        calc = BoltLoadCalc(self, self._load)
 
         return calc.getPr()
+
+    @property
+    def grade(self):
+        return self._grade
