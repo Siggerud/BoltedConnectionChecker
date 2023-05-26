@@ -1,3 +1,3 @@
 from collections import namedtuple
 
-Material = namedtuple("material", ["yield strength", "tensile", "Stainless"])
+Material = namedtuple('Material' ,['yield strength', 'tensile strength', 'Stainless'], rename=True)

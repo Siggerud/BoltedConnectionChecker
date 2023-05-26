@@ -1,6 +1,33 @@
-from collections import namedtuple
+class Plate:
+    def __init__(self, width, height, thickness, material):
+        self._width = width
+        self._height = height
+        self._thickness = thickness
+        self._material = material
+        self._bolts = None
 
-Plate = namedtuple("Plate", ["width", "height", "thickness", "holeSize", "material"])
+    def add_bolts(self, bolts):
+        self._bolts = bolts
+
+    @property
+    def width(self):
+        return self._width
+
+    @property
+    def height(self):
+        return self._height
+
+    @property
+    def xc(self):
+        xc = sum([bolt.x * bolt.As for bolt in self._bolts]) / sum([bolt.As for bolt in self._bolts])
+        return xc
+
+    @property
+    def yc(self):
+        yc = sum([bolt.y * bolt.As for bolt in self._bolts]) / sum([bolt.As for bolt in self._bolts])
+        return yc
+
+
 
 
 
