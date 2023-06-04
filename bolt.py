@@ -12,6 +12,35 @@ class Bolt:
         self._bolts = None
         self._countersunk = countersunk
 
+    def checkIfEndBoltHeightDirection(self):
+        min = self.plate.yc
+        max = min
+        for bolt in self._bolts:
+            if bolt.y < min:
+                min = bolt.y
+            elif bolt.y > max:
+                max = bolt.y
+
+        y = self.y
+        if y == min or y == max:
+            return True
+        return False
+
+    def checkIfEndBoltWidthDirection(self):
+        min = self.plate.xc
+        max = min
+        for bolt in self._bolts:
+            if bolt.x < min:
+                min = bolt.x
+            elif bolt.x > max:
+                max = bolt.x
+
+        x = self.x
+        if x == min or x == max:
+            return True
+        return False
+
+
     @property
     def countersunk(self):
         return self._countersunk
@@ -63,8 +92,15 @@ class Bolt:
         return sum([bolt.rxy**2 * bolt.As for bolt in self._bolts])
 
     @property
+    def d0(self):
+        holeSizes = {"M5": 5.5, "M6": 6.6, "M8": 9, "M10": 11, "M12": 14, "M16": 18, "M20": 22,
+                     "M22": 24, "M24": 26, "M27": 30, "M30": 33, "M33": 36, "M36": 39, "M39": 42}
+
+        return holeSizes[self._size]
+
+    @property
     def As(self):
-        tensileStressAreas = {"M4": 8.78, "M5": 14.18, "M6": 20.12, "M8": 36.61, "M10": 58.00,
+        tensileStressAreas = {"M5": 14.18, "M6": 20.12, "M8": 36.61, "M10": 58.00,
                               "M12": 84.27, "M16": 156.67, "M20": 244.79, "M22": 303.4, "M24": 352.5,
                               "M27": 459.41, "M30": 560.59, "M33": 693.55, "M36": 816.72, "M39": 976}
 
@@ -117,3 +153,11 @@ class Bolt:
     @property
     def grade(self):
         return self._grade
+
+    @property
+    def size(self):
+        return self._size
+
+    @property
+    def plate(self):
+        return self._plate

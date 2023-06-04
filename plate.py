@@ -10,12 +10,20 @@ class Plate:
         self._bolts = bolts
 
     @property
+    def material(self):
+        return self._material
+
+    @property
     def width(self):
         return self._width
 
     @property
     def height(self):
         return self._height
+
+    @property
+    def t(self):
+        return self._thickness
 
     @property
     def xc(self):
